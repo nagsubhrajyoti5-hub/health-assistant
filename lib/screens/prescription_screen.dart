@@ -11,16 +11,17 @@ class PrescriptionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Icon(Icons.description, size: 80, color: Colors.blue),
+            const SizedBox(height: 24),
             const Text(
               'Prescriptions & Lab Reports',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {
-                // TODO: Open camera/OCR later
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Scan Prescription - coming soon')),
+                  const SnackBar(content: Text('OCR Scan - coming soon')),
                 );
               },
               icon: const Icon(Icons.camera_alt),
