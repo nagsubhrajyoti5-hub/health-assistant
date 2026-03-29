@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+// Import your BP screen
+import 'screens/bp_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -37,6 +40,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// 🔥 MAIN NAVIGATION (THIS IS IMPORTANT)
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -75,23 +80,16 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 }
 
-// TEMP SCREENS (we upgrade next)
+// 🔧 TEMP SCREENS (DON’T WORRY, WE WILL UPGRADE)
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Dashboard"));
-  }
-}
-
-class BPScreen extends StatelessWidget {
-  const BPScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text("BP Screen"));
+    return const Scaffold(
+      body: Center(child: Text("Dashboard")),
+    );
   }
 }
 
@@ -100,7 +98,9 @@ class MedicineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Medicine Screen"));
+    return const Scaffold(
+      body: Center(child: Text("Medicines")),
+    );
   }
 }
 
@@ -109,7 +109,9 @@ class PrescriptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Prescription Screen"));
+    return const Scaffold(
+      body: Center(child: Text("Records")),
+    );
   }
 }
 
@@ -118,6 +120,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Settings"));
+    return const Scaffold(
+      body: Center(child: Text("Settings")),
+    );
   }
 }
