@@ -9,18 +9,24 @@ class MedicineScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Medicines')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Open Add Medicine form later
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Add new medicine - coming soon')),
+            const SnackBar(content: Text('Add Medicine - coming in next step')),
           );
         },
         child: const Icon(Icons.add),
       ),
       body: const Center(
-        child: Text(
-          'Your Medicines\n\n(Stock, schedule & reminders will appear here)',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.medication, size: 80, color: Colors.orange),
+            SizedBox(height: 16),
+            Text(
+              'Your Medicines\n\n(Stock, schedule & reminders will appear here)',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
         ),
       ),
     );
