@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/bp_model.dart';
 
 class BPScreen extends StatefulWidget {
   const BPScreen({super.key});
@@ -12,43 +11,36 @@ class _BPScreenState extends State<BPScreen> {
   final systolicController = TextEditingController();
   final diastolicController = TextEditingController();
 
-  List<BPModel> data = [];
+  String result = "";
 
-  void addBP() {
-    final sys = int.tryParse(systolicController.text);
-    final dia = int.tryParse(diastolicController.text);
+  void calculateBP() {
+    final sys = int.tryParse(systolicController.text) ?? 0;
+    final dia = int.tryParse(diastolicController.text) ?? 0;
 
-    if (sys == null || dia == null) return;
+    if (sys == 0 || dia == 0) {
+      setState(() => result = "Enter valid values");
+      return;
+    }
 
-    data.add(BPModel(
-      systolic: sys,
-      diastolic: dia,
-      date: DateTime.now(),
-    ));
-
-    systolicController.clear();
-    diastolicController.clear();
+    if (sys < 120 && dia < 80) {
+      result = "Normal";
+    } else if (sys < 130 && dia < 80) {
+      result = "Elevated";
+    } else if (sys < 140 || dia < 90) {
+      result = "High BP Stage 1";
+    } else {
+      result = "High BP Stage 2";
+    }
 
     setState(() {});
-  }
-
-  String getPrediction() {
-    if (data.length < 2) return "Not enough data";
-
-    final last = data[data.length - 1];
-    final prev = data[data.length - 2];
-
-    if (last.systolic > prev.systolic) return "Increasing ⚠️";
-    if (last.systolic < prev.systolic) return "Improving ✅";
-    return "Stable";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Blood Pressure")),
+      appBar: AppBar(title: const Text('BP Tracker')),
       body: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
@@ -61,26 +53,13 @@ class _BPScreenState extends State<BPScreen> {
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(labelText: "Diastolic"),
             ),
-            const SizedBox(height: 10),
-            ElevatedButton(onPressed: addBP, child: const Text("Add BP")),
-
-            const SizedBox(height: 10),
-            Text(getPrediction()),
-
             const SizedBox(height: 20),
-
-            Expanded(
-              child: ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (_, i) {
-                  final bp = data[i];
-                  return ListTile(
-                    title: Text("${bp.systolic}/${bp.diastolic}"),
-                    subtitle: Text(bp.date.toString()),
-                  );
-                },
-              ),
+            ElevatedButton(
+              onPressed: calculateBP,
+              child: const Text("Check BP"),
             ),
+            const SizedBox(height: 20),
+            Text(result, style: const TextStyle(fontSize: 20)),
           ],
         ),
       ),
