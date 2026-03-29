@@ -13,6 +13,8 @@ class _BPScreenState extends State<BPScreen> {
 
   String result = "";
 
+  List<Map<String, int>> history = [];
+
   void calculateBP() {
     final sys = int.tryParse(systolicController.text) ?? 0;
     final dia = int.tryParse(diastolicController.text) ?? 0;
@@ -31,6 +33,15 @@ class _BPScreenState extends State<BPScreen> {
     } else {
       result = "High BP Stage 2";
     }
+
+    // 🔥 SAVE HISTORY
+    history.add({
+      "sys": sys,
+      "dia": dia,
+    });
+
+    systolicController.clear();
+    diastolicController.clear();
 
     setState(() {});
   }
@@ -53,13 +64,32 @@ class _BPScreenState extends State<BPScreen> {
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(labelText: "Diastolic"),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: calculateBP,
-              child: const Text("Check BP"),
+              child: const Text("Add Reading"),
             ),
+            const SizedBox(height: 10),
+            Text(result, style: const TextStyle(fontSize: 18)),
+
             const SizedBox(height: 20),
-            Text(result, style: const TextStyle(fontSize: 20)),
+
+            // 🔥 HISTORY LIST
+            Expanded(
+              child: ListView.builder(
+                itemCount: history.length,
+                itemBuilder: (context, index) {
+                  final item = history[index];
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        "Systolic: ${item['sys']}  |  Diastolic: ${item['dia']}",
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
