@@ -1,39 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:hive/hive.dart';
-import 'package:your_package_location/main_navigation.dart'; // Update with the correct path
-import 'package:your_package_location/models/your_model.dart'; // Update with the correct path
+import 'navigation/main_navigation.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize Firebase
-  await Firebase.initializeApp();
-  
-  // Initialize Hive
-  await Hive.initFlutter();
-  Hive.registerAdapter(YourModelAdapter()); // Register your Hive adapters here
-  
-  runApp(MyApp());
+void main() {
+  runApp(const HealthAssistantApp());
 }
 
-class MyApp extends StatelessWidget {
+class HealthAssistantApp extends StatelessWidget {
+  const HealthAssistantApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Health Assistant',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.light,
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.dark,
+        ),
       ),
-      themeMode: ThemeMode.system, // Use system theme mode
-      home: MainNavigation(),
+      themeMode: ThemeMode.system, // will be controlled later from Settings
+      home: const MainNavigation(),
     );
   }
 }
