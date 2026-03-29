@@ -1,46 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  // Initialize Firebase
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Firebase init
   await Firebase.initializeApp();
 
-  // Initialize Hive
+  // Hive init
   await Hive.initFlutter();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Health Assistant',
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
-        // Light theme settings go here
+        colorSchemeSeed: Colors.blue,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        // Dark theme settings go here
+        colorSchemeSeed: Colors.blue,
       ),
       home: const MainNavigation(),
     );
   }
 }
 
-class MainNavigation extends StatelessWidget {
-  const MainNavigation({Key? key}) : super(key: key);
+class MainNavigation extends StatefulWidget {
+  const MainNavigation({super.key});
+
+  @override
+  State<MainNavigation> createState() => _MainNavigationState();
+}
+
+class _MainNavigationState extends State<MainNavigation> {
+  int index = 0;
+
+  final screens = const [
+    DashboardScreen(),
+    BPScreen(),
+    MedicineScreen(),
+    PrescriptionScreen(),
+    SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Main Navigation')), 
-      body: Center(child: Text('Welcome to Health Assistant!')), 
+      body: screens[index],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: index,
+        onDestinationSelected: (i) => setState(() => index = i),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.dashboard), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.monitor_heart), label: 'BP'),
+          NavigationDestination(icon: Icon(Icons.medication), label: 'Meds'),
+          NavigationDestination(icon: Icon(Icons.folder), label: 'Records'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+      ),
     );
+  }
+}
+
+// TEMP SCREENS (we upgrade next)
+
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text("Dashboard"));
+  }
+}
+
+class BPScreen extends StatelessWidget {
+  const BPScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text("BP Screen"));
+  }
+}
+
+class MedicineScreen extends StatelessWidget {
+  const MedicineScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text("Medicine Screen"));
+  }
+}
+
+class PrescriptionScreen extends StatelessWidget {
+  const PrescriptionScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text("Prescription Screen"));
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text("Settings"));
   }
 }
