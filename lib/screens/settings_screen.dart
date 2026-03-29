@@ -8,7 +8,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _darkMode = false; // UI toggle only for now
+  bool _darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +19,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           SwitchListTile(
             title: const Text('Dark Mode'),
-            subtitle: const Text('Switch between light and dark theme'),
+            subtitle: const Text('System theme is used by default'),
             value: _darkMode,
             onChanged: (value) {
               setState(() => _darkMode = value);
-              // TODO: Later connect to ThemeMode
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Theme will update in next version')),
+                const SnackBar(content: Text('Theme update coming in next version')),
               );
             },
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.lock),
-            title: const Text('Privacy Lock'),
-            subtitle: const Text('Biometric / PIN protection (coming soon)'),
+            leading: const Icon(Icons.lock_outline),
+            title: const Text('App Lock'),
+            subtitle: const Text('Biometric / PIN (coming soon)'),
             onTap: () {},
           ),
           ListTile(
-            leading: const Icon(Icons.file_download),
-            title: const Text('Export Data'),
-            subtitle: const Text('PDF report for doctor'),
+            leading: const Icon(Icons.file_download_outlined),
+            title: const Text('Export Report'),
+            subtitle: const Text('PDF for doctor visit'),
             onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.smart_toy_outlined),
+            title: const Text('AI Health Advisor'),
+            subtitle: const Text('Super-smart chat with your data'),
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('AI Advisor coming in next step')),
+              );
+            },
           ),
         ],
       ),
