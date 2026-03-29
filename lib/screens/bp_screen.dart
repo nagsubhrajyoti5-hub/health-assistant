@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 
-class BPScreen extends StatelessWidget {
-  const BPScreen({super.key});
+class PrescriptionScreen extends StatelessWidget {
+  const PrescriptionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Blood Pressure')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Open BP entry form later
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Add BP reading - coming soon')),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: const Center(
-        child: Text(
-          'Blood Pressure History\n\n(Charts & list will appear here)',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18),
+      appBar: AppBar(title: const Text('Records')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Prescriptions & Lab Reports',
+              style: TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () {
+                // TODO: Open camera/OCR later
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Scan Prescription - coming soon')),
+                );
+              },
+              icon: const Icon(Icons.camera_alt),
+              label: const Text('Scan Prescription'),
+            ),
+          ],
         ),
       ),
     );
